@@ -2,7 +2,7 @@
 defineProps<CardInterface>();
 
 const emit = defineEmits<{
-  (e: "card-select", payload: number): number;
+  (e: "card-select", payload: CardPayload): number;
 }>();
 </script>
 <!-- new script tag couse cant import interface from other files
@@ -13,11 +13,20 @@ interface CardInterface {
   position: number;
   visible: boolean;
 }
-export type { CardInterface };
+
+interface CardPayload {
+  position: number;
+  faceValue: number;
+}
+
+export type { CardInterface, CardPayload };
 </script>
 
 <template>
-  <div class="card" @click="emit('card-select', position)">
+  <div
+    class="card"
+    @click="emit('card-select', { position, faceValue: value })"
+  >
     <div v-if="visible" class="card-face is-front">{{ value }}</div>
     <div v-else class="card-face is-back">back</div>
   </div>
