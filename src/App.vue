@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import type { Ref } from "vue";
 
 import AppCard from "./components/AppCard.vue";
@@ -9,7 +9,19 @@ type FlipCard = (payload: CardPayload) => void;
 
 const cardList: Ref<CardInterface[]> = ref([]);
 const userSelection: Ref<CardPayload[]> = ref([]);
-const status: Ref<string> = ref("");
+
+const remainingPairs = computed(() => {
+  const remaining = cardList.value.filter((card) => !card.matched).length / 2;
+  return remaining;
+});
+
+const status = computed(() => {
+  if (remainingPairs.value === 0) {
+    return "you win";
+  } else {
+    return `${remainingPairs.value} pairs remaind`;
+  }
+});
 
 const flipCard: FlipCard = (payload) => {
   cardList.value[payload.position].visible = true;
@@ -23,7 +35,7 @@ const flipCard: FlipCard = (payload) => {
 
 for (let i = 0; i < 16; i++) {
   cardList.value.push({
-    value: i,
+    value: 7,
     visible: false,
     position: i,
     matched: false,
@@ -38,11 +50,9 @@ watch(
       const cardTwo = currentValue[1];
 
       if (cardOne.faceValue === cardTwo.faceValue) {
-        status.value = "matched";
         cardList.value[cardOne.position].matched = true;
         cardList.value[cardTwo.position].matched = true;
       } else {
-        status.value = "not matched";
         cardList.value[cardOne.position].visible = false;
         cardList.value[cardTwo.position].visible = false;
       }
@@ -67,7 +77,7 @@ watch(
       @card-select="flipCard"
     />
   </section>
-  <h2>status: {{ status }}</h2>
+  <h2>{{ status }}</h2>
 </template>
 
 <style>
