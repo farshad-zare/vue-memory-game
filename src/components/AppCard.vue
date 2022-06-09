@@ -28,7 +28,9 @@ export type { CardInterface, CardPayload };
     class="card"
     @click="emit('card-select', { position, faceValue: value })"
   >
-    <div v-if="visible" class="card-face is-front">{{ value }}</div>
+    <div v-if="visible" class="card-face is-front">
+      {{ position }} - {{ value }}
+    </div>
     <div v-else class="card-face is-back">back</div>
   </div>
 </template>

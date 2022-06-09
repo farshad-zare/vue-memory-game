@@ -40,24 +40,40 @@ const shuffleCards = () => {
 
 const restartGame = () => {
   shuffleCards();
+
   cardList.value = cardList.value.map((card, index) => {
     return {
       ...card,
       matched: false,
-      visible: false,
+      visible: true,
       position: index,
     };
   });
 };
 
-for (let i = 0; i < 16; i++) {
+const cardItem = [1, 2, 3, 4, 5, 6, 7, 8];
+
+cardItem.forEach((item) => {
   cardList.value.push({
-    value: i,
+    value: item,
     visible: true,
-    position: i,
+    position: item,
     matched: false,
   });
-}
+  cardList.value.push({
+    value: item,
+    visible: true,
+    position: item,
+    matched: false,
+  });
+});
+
+cardList.value = cardList.value.map((card, index) => {
+  return {
+    ...card,
+    position: index,
+  };
+});
 
 watch(
   userSelection,
@@ -87,7 +103,7 @@ watch(
     <AppCard
       v-for="card in cardList"
       :value="card.value"
-      :key="card.value"
+      :key="card.position"
       :visible="card.visible"
       :position="card.position"
       :matched="card.matched"
