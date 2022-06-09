@@ -30,14 +30,19 @@ export type { CardInterface, CardPayload };
   >
     <div v-if="visible" class="card-face is-front">
       {{ position }} - {{ value }}
+      <img
+        class="check-icon"
+        v-if="matched"
+        src="/images/checkmark.svg"
+        alt="matched card"
+      />
     </div>
-    <div v-else class="card-face is-back">back</div>
+    <div v-else class="card-face is-back"></div>
   </div>
 </template>
 
 <style scoped>
 .card {
-  border: 3px solid #ccc;
   position: relative;
 }
 
@@ -46,13 +51,20 @@ export type { CardInterface, CardPayload };
   height: 100%;
   position: absolute;
   top: 0;
+  border-radius: 10px;
 }
 
 .card-face.is-front {
-  background-color: red;
+  background-image: url(/images/card-bg.png);
 }
 
 .card-face.is-back {
-  background-color: blue;
+  background-image: url(/images/card-bg-empty.png);
+}
+
+.check-icon {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
 }
 </style>

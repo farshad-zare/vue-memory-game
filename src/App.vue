@@ -120,15 +120,31 @@ watch(
 </template>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+#app {
+  background-image: url(images/page-bg.png);
+  background-color: #00070c;
+  height: 100vh;
+  color: #fff;
+  padding-top: 10px;
+}
+
 .app-title {
   text-align: center;
-  color: #444;
+  margin-bottom: 10px;
 }
+
 .game-board {
   display: grid;
   grid-template-columns: repeat(4, 100px);
   grid-template-rows: repeat(4, 100px);
-  gap: 30px;
+  gap: 20px;
   justify-content: center;
 }
 </style>
