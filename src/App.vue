@@ -28,6 +28,9 @@ const flipCard: FlipCard = (payload) => {
   cardList.value[payload.position].visible = true;
 
   if (userSelection.value[0]) {
+    if (userSelection.value[0].position === payload.position) {
+      return;
+    }
     userSelection.value[1] = payload;
   } else {
     userSelection.value[0] = payload;
@@ -45,7 +48,7 @@ const restartGame = () => {
     return {
       ...card,
       matched: false,
-      visible: true,
+      visible: false,
       position: index,
     };
   });
@@ -56,13 +59,13 @@ const cardItem = [1, 2, 3, 4, 5, 6, 7, 8];
 cardItem.forEach((item) => {
   cardList.value.push({
     value: item,
-    visible: true,
+    visible: false,
     position: item,
     matched: false,
   });
   cardList.value.push({
     value: item,
-    visible: true,
+    visible: false,
     position: item,
     matched: false,
   });
@@ -86,8 +89,10 @@ watch(
         cardList.value[cardOne.position].matched = true;
         cardList.value[cardTwo.position].matched = true;
       } else {
-        cardList.value[cardOne.position].visible = false;
-        cardList.value[cardTwo.position].visible = false;
+        setTimeout(() => {
+          cardList.value[cardOne.position].visible = false;
+          cardList.value[cardTwo.position].visible = false;
+        }, 2000);
       }
 
       userSelection.value.length = 0;
