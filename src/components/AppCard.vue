@@ -12,6 +12,7 @@ interface CardInterface {
   value: number;
   position: number;
   visible: boolean;
+  matched: boolean;
 }
 
 interface CardPayload {

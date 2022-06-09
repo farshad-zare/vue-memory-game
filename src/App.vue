@@ -9,6 +9,7 @@ type FlipCard = (payload: CardPayload) => void;
 
 const cardList: Ref<CardInterface[]> = ref([]);
 const userSelection: Ref<CardPayload[]> = ref([]);
+const status: Ref<string> = ref("");
 
 const flipCard: FlipCard = (payload) => {
   cardList.value[payload.position].visible = true;
@@ -21,7 +22,12 @@ const flipCard: FlipCard = (payload) => {
 };
 
 for (let i = 0; i < 16; i++) {
-  cardList.value.push({ value: i, visible: false, position: i });
+  cardList.value.push({
+    value: i,
+    visible: false,
+    position: i,
+    matched: false,
+  });
 }
 
 watch(
@@ -31,8 +37,15 @@ watch(
       const cardOne = currentValue[0];
       const cardTwo = currentValue[1];
 
-      cardList.value[cardOne.position].visible = false;
-      cardList.value[cardTwo.position].visible = false;
+      if (cardOne.faceValue === cardTwo.faceValue) {
+        status.value = "matched";
+        cardList.value[cardOne.position].matched = true;
+        cardList.value[cardTwo.position].matched = true;
+      } else {
+        status.value = "not matched";
+        cardList.value[cardOne.position].visible = false;
+        cardList.value[cardTwo.position].visible = false;
+      }
 
       userSelection.value.length = 0;
     }
@@ -45,15 +58,16 @@ watch(
   <h1 class="app-title">Memory Game</h1>
   <section class="game-board">
     <AppCard
-      v-for="(card, index) in cardList"
+      v-for="card in cardList"
       :value="card.value"
       :key="card.value"
       :visible="card.visible"
-      :position="index"
+      :position="card.position"
+      :matched="card.matched"
       @card-select="flipCard"
     />
   </section>
-  <h2>{{ userSelection }}</h2>
+  <h2>status: {{ status }}</h2>
 </template>
 
 <style>
