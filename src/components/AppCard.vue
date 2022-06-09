@@ -8,16 +8,16 @@ const emit = defineEmits<{
 <!-- new script tag couse cant import interface from other files
 and cant export interface from script setup -->
 <script lang="ts">
-interface CardInterface {
-  value: number;
+type CardInterface = {
+  value: string;
   position: number;
   visible: boolean;
   matched: boolean;
-}
+};
 
 interface CardPayload {
   position: number;
-  faceValue: number;
+  faceValue: string;
 }
 
 export type { CardInterface, CardPayload };
@@ -26,10 +26,17 @@ export type { CardInterface, CardPayload };
 <template>
   <div
     class="card"
-    @click="emit('card-select', { position, faceValue: value })"
+    @click="
+      () => {
+        if (visible) {
+          return;
+        }
+        emit('card-select', { position, faceValue: value });
+      }
+    "
   >
     <div v-if="visible" class="card-face is-front">
-      {{ position }} - {{ value }}
+      <img :src="`/images/${value}.png`" :alt="value" />
       <img
         class="check-icon"
         v-if="matched"
@@ -52,6 +59,9 @@ export type { CardInterface, CardPayload };
   position: absolute;
   top: 0;
   border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-face.is-front {
@@ -60,6 +70,7 @@ export type { CardInterface, CardPayload };
 
 .card-face.is-back {
   background-image: url(/images/card-bg-empty.png);
+  cursor: pointer;
 }
 
 .check-icon {

@@ -20,7 +20,7 @@ const status = computed(() => {
   if (remainingPairs.value === 0) {
     return "you win";
   } else {
-    return `${remainingPairs.value} pairs remaind`;
+    return `${remainingPairs.value} pairs remains`;
   }
 });
 
@@ -28,9 +28,6 @@ const flipCard: FlipCard = (payload) => {
   cardList.value[payload.position].visible = true;
 
   if (userSelection.value[0]) {
-    if (userSelection.value[0].position === payload.position) {
-      return;
-    }
     userSelection.value[1] = payload;
   } else {
     userSelection.value[0] = payload;
@@ -54,19 +51,28 @@ const restartGame = () => {
   });
 };
 
-const cardItem = [1, 2, 3, 4, 5, 6, 7, 8];
+const cardItem = [
+  "bat",
+  "candy",
+  "cauldron",
+  "cupcake",
+  "ghost",
+  "moon",
+  "pumpkin",
+  "witch-hat",
+];
 
-cardItem.forEach((item) => {
+cardItem.forEach((item, index) => {
   cardList.value.push({
     value: item,
-    visible: false,
-    position: item,
+    visible: true,
+    position: index,
     matched: false,
   });
   cardList.value.push({
     value: item,
-    visible: false,
-    position: item,
+    visible: true,
+    position: index,
     matched: false,
   });
 });
@@ -92,7 +98,7 @@ watch(
         setTimeout(() => {
           cardList.value[cardOne.position].visible = false;
           cardList.value[cardTwo.position].visible = false;
-        }, 2000);
+        }, 1500);
       }
 
       userSelection.value.length = 0;
@@ -104,6 +110,7 @@ watch(
 
 <template>
   <h1 class="app-title">Memory Game</h1>
+  <button class="start-btn" @click="restartGame">Start Game</button>
   <section class="game-board">
     <AppCard
       v-for="card in cardList"
@@ -116,7 +123,6 @@ watch(
     />
   </section>
   <h2>{{ status }}</h2>
-  <button @click="restartGame">Start Game</button>
 </template>
 
 <style>
@@ -130,14 +136,16 @@ watch(
 #app {
   background-image: url(images/page-bg.png);
   background-color: #00070c;
-  height: 100vh;
+  min-height: 100vh;
   color: #fff;
-  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .app-title {
   text-align: center;
-  margin-bottom: 10px;
 }
 
 .game-board {
@@ -146,5 +154,16 @@ watch(
   grid-template-rows: repeat(4, 100px);
   gap: 20px;
   justify-content: center;
+}
+
+.start-btn {
+  background-color: orange;
+  font-weight: 900;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.start-btn:hover {
+  cursor: pointer;
 }
 </style>
