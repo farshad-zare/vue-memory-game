@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, computed } from "vue";
 import type { Ref } from "vue";
+import _ from "lodash";
 
 import AppCard from "./components/AppCard.vue";
 import type { CardInterface, CardPayload } from "./components/AppCard.vue";
@@ -33,10 +34,26 @@ const flipCard: FlipCard = (payload) => {
   }
 };
 
+const shuffleCards = () => {
+  cardList.value = _.shuffle(cardList.value);
+};
+
+const restartGame = () => {
+  shuffleCards();
+  cardList.value = cardList.value.map((card, index) => {
+    return {
+      ...card,
+      matched: false,
+      visible: false,
+      position: index,
+    };
+  });
+};
+
 for (let i = 0; i < 16; i++) {
   cardList.value.push({
-    value: 7,
-    visible: false,
+    value: i,
+    visible: true,
     position: i,
     matched: false,
   });
@@ -78,6 +95,7 @@ watch(
     />
   </section>
   <h2>{{ status }}</h2>
+  <button @click="restartGame">Start Game</button>
 </template>
 
 <style>
