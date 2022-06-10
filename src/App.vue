@@ -40,7 +40,7 @@ const shuffleCards = () => {
 
 const restartGame = () => {
   shuffleCards();
-
+  userSelection.value.length = 0;
   cardList.value = cardList.value.map((card, index) => {
     return {
       ...card,
