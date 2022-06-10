@@ -3,6 +3,8 @@ import { ref, watch, computed } from "vue";
 import type { Ref } from "vue";
 import _ from "lodash";
 
+import winConfetti from "./utils/confetti";
+
 import AppCard from "./components/AppCard.vue";
 import type { CardInterface, CardPayload } from "./components/AppCard.vue";
 
@@ -18,6 +20,7 @@ const remainingPairs = computed(() => {
 
 const status = computed(() => {
   if (remainingPairs.value === 0) {
+    winConfetti();
     return "you win";
   } else {
     return `${remainingPairs.value} pairs remains`;
