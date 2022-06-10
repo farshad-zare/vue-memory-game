@@ -26,6 +26,7 @@ export type { CardInterface, CardPayload };
 <template>
   <div
     class="card"
+    :class="visible ? 'is-flipped' : null"
     @click="
       () => {
         if (visible) {
@@ -35,7 +36,7 @@ export type { CardInterface, CardPayload };
       }
     "
   >
-    <div v-if="visible" class="card-face is-front">
+    <div class="card-face is-front">
       <img :src="`/images/${value}.png`" :alt="value" />
       <img
         class="check-icon"
@@ -44,13 +45,20 @@ export type { CardInterface, CardPayload };
         alt="matched card"
       />
     </div>
-    <div v-else class="card-face is-back"></div>
+    <div class="card-face is-back"></div>
   </div>
 </template>
 
 <style scoped>
 .card {
   position: relative;
+  transition-property: transform;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in;
+  transform-style: preserve-3d;
+}
+.card.is-flipped {
+  transform: rotateY(180deg);
 }
 
 .card-face {
@@ -62,10 +70,12 @@ export type { CardInterface, CardPayload };
   display: flex;
   justify-content: center;
   align-items: center;
+  backface-visibility: hidden;
 }
 
 .card-face.is-front {
   background-image: url(/images/card-bg.png);
+  transform: rotateY(180deg);
 }
 
 .card-face.is-back {

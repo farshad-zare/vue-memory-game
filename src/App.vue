@@ -65,13 +65,13 @@ const cardItem = [
 cardItem.forEach((item, index) => {
   cardList.value.push({
     value: item,
-    visible: true,
+    visible: false,
     position: index,
     matched: false,
   });
   cardList.value.push({
     value: item,
-    visible: true,
+    visible: false,
     position: index,
     matched: false,
   });
