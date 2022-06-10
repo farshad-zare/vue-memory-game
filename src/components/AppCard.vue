@@ -13,6 +13,7 @@ type CardInterface = {
   position: number;
   visible: boolean;
   matched: boolean;
+  variant?: 1 | 2;
 };
 
 interface CardPayload {

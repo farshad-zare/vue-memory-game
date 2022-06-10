@@ -68,12 +68,14 @@ cardItem.forEach((item, index) => {
     visible: false,
     position: index,
     matched: false,
+    variant: 1,
   });
   cardList.value.push({
     value: item,
     visible: false,
     position: index,
     matched: false,
+    variant: 2,
   });
 });
 
@@ -111,17 +113,17 @@ watch(
 <template>
   <h1 class="app-title">Memory Game</h1>
   <button class="start-btn" @click="restartGame">Start Game</button>
-  <section class="game-board">
+  <transition-group tag="section" name="shuffle-card" class="game-board">
     <AppCard
       v-for="card in cardList"
       :value="card.value"
-      :key="card.position"
+      :key="`${card.variant}-${card.value}`"
       :visible="card.visible"
       :position="card.position"
       :matched="card.matched"
       @card-select="flipCard"
     />
-  </section>
+  </transition-group>
   <h2>{{ status }}</h2>
 </template>
 
@@ -165,5 +167,11 @@ watch(
 
 .start-btn:hover {
   cursor: pointer;
+}
+
+.shuffle-card-move {
+  transition-property: transform;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in;
 }
 </style>
