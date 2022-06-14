@@ -1,5 +1,5 @@
 {
-  "name": "peek-a-vue",
+  "name": "pokemon-memory",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
