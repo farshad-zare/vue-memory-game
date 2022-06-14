@@ -18,15 +18,6 @@ const remainingPairs = computed(() => {
   return remaining;
 });
 
-const status = computed(() => {
-  if (remainingPairs.value === 0) {
-    winConfetti();
-    return "you win";
-  } else {
-    return `${remainingPairs.value} pairs remains`;
-  }
-});
-
 const flipCard: FlipCard = (payload) => {
   cardList.value[payload.position].visible = true;
 
@@ -68,14 +59,14 @@ const cardItem = [
 cardItem.forEach((item, index) => {
   cardList.value.push({
     value: item,
-    visible: false,
+    visible: true,
     position: index,
     matched: false,
     variant: 1,
   });
   cardList.value.push({
     value: item,
-    visible: false,
+    visible: true,
     position: index,
     matched: false,
     variant: 2,
@@ -111,6 +102,12 @@ watch(
   },
   { deep: true }
 );
+
+watch(remainingPairs, () => {
+  if (remainingPairs.value === 0) {
+    winConfetti();
+  }
+});
 </script>
 
 <template>
@@ -127,7 +124,6 @@ watch(
       @card-select="flipCard"
     />
   </transition-group>
-  <h2>{{ status }}</h2>
 </template>
 
 <style>
@@ -151,6 +147,7 @@ watch(
 
 .app-title {
   text-align: center;
+  filter: none;
 }
 
 .game-board {
@@ -159,6 +156,10 @@ watch(
   grid-template-rows: repeat(4, 100px);
   gap: 20px;
   justify-content: center;
+  backdrop-filter: blur(20px);
+  padding: 20px;
+  box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.63);
+  border-radius: 5px;
 }
 
 .start-btn {

@@ -57,17 +57,19 @@ export type { CardInterface, CardPayload };
   transition-duration: 0.5s;
   transition-timing-function: ease-in;
   transform-style: preserve-3d;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.63);
+  border-radius: 10px;
 }
 .card.is-flipped {
   transform: rotateY(180deg);
 }
 
 .card-face {
+  border-radius: 10px;
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
-  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
