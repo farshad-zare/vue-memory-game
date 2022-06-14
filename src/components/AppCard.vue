@@ -38,7 +38,7 @@ export type { CardInterface, CardPayload };
     "
   >
     <div class="card-face is-front">
-      <img :src="`/images/${value}.png`" :alt="value" />
+      <img class="card-img" :src="`/images/${value}.png`" :alt="value" />
       <img
         class="check-icon"
         v-if="matched"
@@ -88,5 +88,10 @@ export type { CardInterface, CardPayload };
   position: absolute;
   bottom: 5px;
   right: 5px;
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
 }
 </style>

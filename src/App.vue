@@ -55,14 +55,14 @@ const restartGame = () => {
 };
 
 const cardItem = [
-  "bat",
-  "candy",
-  "cauldron",
-  "cupcake",
-  "ghost",
-  "moon",
-  "pumpkin",
-  "witch-hat",
+  "pokemon01",
+  "pokemon02",
+  "pokemon03",
+  "pokemon04",
+  "pokemon05",
+  "pokemon06",
+  "pokemon07",
+  "pokemon08",
 ];
 
 cardItem.forEach((item, index) => {
@@ -139,10 +139,10 @@ watch(
 }
 
 #app {
-  background-image: url(images/page-bg.png);
+  background-image: url(images/page-bg.jpg);
   background-color: #00070c;
   min-height: 100vh;
-  color: #fff;
+  color: rgb(41, 40, 40);
   display: flex;
   flex-direction: column;
   justify-content: space-around;
